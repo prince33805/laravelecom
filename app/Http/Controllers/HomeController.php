@@ -35,7 +35,7 @@ class HomeController extends Controller
     {
         $product = Product::all();
         $category = Category::all();
-        $category_name = "";
+        $categoryname = "";
         $sort = "";
 
         if (Request::get('sort') == 'price_asc') {
@@ -63,7 +63,7 @@ class HomeController extends Controller
             $cartcount = 0;
         }
 
-        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'category_name'));
+        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'categoryname'));
     }
 
     public function category($category_name)
@@ -71,7 +71,7 @@ class HomeController extends Controller
         $category = Category::all();
         $product = Product::where('category', '=', $category_name)->get();
         $sort = "";
-        $category_name = ": " . $category_name;
+        $categoryname = ": " . $category_name;
         if (Request::get('sort') == 'price_asc') {
             $product = Product::where('category', '=', $category_name)
                 ->orderBy('product_price', 'asc')->get();
@@ -93,6 +93,8 @@ class HomeController extends Controller
             $sort = "Name - A to Z";
         }
 
+        // dd($product);
+
         if (Auth::id()) {
             $user = Auth::user();
             $cartcount = cart::where('user_id', '=', $user->id)->get()->sum('quantity');
@@ -101,7 +103,7 @@ class HomeController extends Controller
             $cartcount = 0;
         }
 
-        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'category_name'));
+        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'categoryname'));
     }
 
     public function product_details($id)
@@ -115,120 +117,6 @@ class HomeController extends Controller
         }
 
         return view('home.product_detail', compact('product', 'cartcount'));
-    }
-
-    public function add_cart(Request $request, $id)
-    {
-
-        $user = Auth::user();
-        $product = product::find($id);
-
-        $cart = new cart;
-
-        if (Auth::id()) {
-            $cart->user_id = $user->id;
-            $cart->name = $user->name;
-            $cart->phone = $user->phone;
-            $cart->address = $user->address;
-
-            $cart->product_id = $product->id;
-            $cart->product_name = $product->name;
-            $cart->image = $product->image;
-            $cart->priceperpiece = $product->product_price;
-            $cart->quantity = $request->quantity;
-            $cart->price = ($request->quantity) * ($product->product_price);
-
-            $cart->save();
-            alert::success('Product Added Successfully', 'We have added product to the cart ');
-            return redirect()->back();
-        } else {
-            return redirect('login');
-        }
-    }
-
-    public function show_cart()
-    {
-        if (Auth::id()) {
-            $id = Auth::user()->id;
-            $cart = cart::where('user_id', '=', $id)->get();
-            $cartcount = cart::where('user_id', '=', $id)->get()->sum('quantity');
-
-            return view('home.cart', compact('cart', 'cartcount'));
-        } else {
-            return redirect('login');
-        }
-    }
-
-    public function remove_cart($id)
-    {
-        if (Auth::id()) {
-            $cart = cart::find($id);
-            // alert::success('SuccessAlert','Lorem ipsum dolor sit amet.')->showConfirmButton('Confirm', '#3085d6')->showCancelButton('Cancel', '#aaa');
-            $cart->delete();
-
-            return redirect()->back();
-        } else {
-            return redirect('login');
-        }
-    }
-
-    public function confirm_cart()
-    {
-        if (Auth::id()) {
-            $user = Auth::user();
-            $cartcount = cart::where('user_id', '=', $user->id)->get()->sum('quantity');
-            $cart = cart::where('user_id', '=', $user->id)->get();
-
-            return view('home.confirm_cart', compact('user', 'cartcount', 'cart'));
-        } else {
-            return redirect('login');
-        }
-    }
-
-    public function checkout(Request $request)
-    {
-        if (Auth::id()) {
-            $user = Auth::user();
-            $userid = $user->id;
-            $data = cart::where('user_id', '=', $userid)->get();
-
-            $totalquantity = $request->get('totalquantity');
-            $totalprice = $request->get('totalprice');
-
-            $order = new order;
-            $order->user_id = $userid;
-            $order->name = $user->name;
-            $order->email = $user->email;
-            $order->address = $user->address;
-            $order->phone = $user->phone;
-            $order->totalquantity = $totalquantity;
-            $order->totalprice = $totalprice;
-            $order->paymenytype = 'cash on delivery';
-            $order->paymenystatus = 'processing';
-            $order->deliverystatus = 'pending';
-            $order->save();
-
-            foreach ($data as $data) {
-                $orderitem = new order_item;
-                $orderitem->order_id = $order->id;
-                $orderitem->user_id = $userid;
-                $orderitem->product_id = $data->product_id;
-                $orderitem->product_name = $data->product_name;
-                $orderitem->quantity = $data->quantity;
-                $orderitem->priceperpiece = $data->priceperpiece;
-                $orderitem->price = $data->price;
-                $orderitem->save();
-
-                $product = product::where('id', '=', $data->product_id)
-                    ->decrement('product_quantity', $orderitem->quantity);
-
-                $data->delete();
-            }
-
-            return redirect('order');
-        } else {
-            return redirect('login');
-        }
     }
 
     public function order()
@@ -307,10 +195,10 @@ class HomeController extends Controller
             $cartcount = cart::where('user_id', '=', $user->id)->get()->sum('quantity');
 
             $user = user::find($userid);
-            $user->name = $request->name;
-            $user->phone = $request->phone;
-            $user->address = $request->address;
-            $user->email = $request->email;
+            $user->name = Request::get('name');
+            $user->phone = Request::get('phone');
+            $user->address = Request::get('addess');
+            $user->email = Request::get('email');
 
             $user->save();
 
@@ -321,17 +209,41 @@ class HomeController extends Controller
         }
     }
 
+    // style="border:1px solid red;width: 1000px;"
+
     public function searchproduct(Request $request)
     {
         if (Request::get('query')) {
             $query = Request::get('query');
             $data = DB::table('products')->where('name', 'like', '%' . $query . '%')->get();
-            $output = '<ul class="dropdown-menu" style="display:block;position:relative;padding-right: 8rem">';
+            $output = '<ul class="dropdown-menu" style="display:block;position:relative;min-width:315px;z-index: 1;margin-top:-15px">';
             foreach ($data as $row) {
-                $output .= '<li style="margin-left:1rem"><a href="products/' . $row->id . '">' . $row->name . '</a></li>';
+                $output .= '<li><a class="dropdown-item"  href="products/' . $row->id . '">' . $row->name . '</a></li>';
             }
             $output .= '</ul>';
             echo $output;
         }
     }
+
+    public function searching(Request $request)
+    {
+        $category = Category::all();
+        $product = Product::where('name', 'LIKE', '%'.Request::get('search_text').'%')->get();
+        $sort = "";
+        $categoryname = "";
+
+        // dd($product);
+
+        if (Auth::id()) {
+            $user = Auth::user();
+            $cartcount = cart::where('user_id', '=', $user->id)->get()->sum('quantity');
+        } else {
+            $user = 0;
+            $cartcount = 0;
+        }
+
+        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'categoryname'));
+    }
+
+
 }

@@ -91,9 +91,9 @@
                             <?php $totalprice = 0;
                             $totalquantity = 0; ?>
                             <tbody>
-                                @foreach ($cart as $cart)
+                                @foreach ($cart as $key => $cart)
                                     <tr>
-                                        <td class="align-middle">No</td>
+                                        <td class="align-middle">{{$key+1}}</td>
                                         <td><img src="/product/{{ $cart->image }}"></td>
                                         <td class="align-middle">{{ $cart->product_name }}</td>
                                         <td class="align-middle">${{ $cart->priceperpiece }}</td>

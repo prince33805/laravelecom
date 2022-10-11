@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\CartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,13 +75,13 @@ route::get('/products/{id}', [HomeController::class, 'product_details']);
 
 route::get('/product_category/{category_name}', [HomeController::class, 'category'])->name('category');
 route::post('/searchproduct', [HomeController::class, 'searchproduct'])->name('searchproduct');
+route::get('searching',[HomeController::class, 'searching'])->name('searching');
 
-route::post('/add_cart/{id}', [HomeController::class, 'add_cart']);
-route::get('/cart', [HomeController::class, 'show_cart']);
-route::get('/remove_cart/{id}', [HomeController::class, 'remove_cart']);
-
-route::get('/confirm_cart', [HomeController::class, 'confirm_cart']);
-route::post('/checkout', [HomeController::class, 'checkout']);
+route::post('/add_cart/{id}', [CartController::class, 'add_cart']);
+route::get('/cart', [CartController::class, 'show_cart']);
+route::get('/remove_cart/{id}', [CartController::class, 'remove_cart']);
+route::get('/confirm_cart', [CartController::class, 'confirm_cart']);
+route::post('/checkout', [CartController::class, 'checkout']);
 
 Route::get('/orders', [HomeController::class, 'order']);
 Route::get('/orders/{id}', [HomeController::class, 'order_detail']);

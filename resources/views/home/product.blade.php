@@ -11,7 +11,7 @@
                     <div class="box">
                         <div class="option_container">
                             <div class="options">
-                                <a href="{{ url('product_details', $product->id) }}" class="option1">
+                                <a href="{{ url('products', $product->id) }}" class="option1">
                                     View Product
                                 </a>
                                 <form action="{{ url('add_cart', $product->id) }}" method="POST">
@@ -29,21 +29,20 @@
                             <h5>
                                 {{ $product->name }}
                             </h5>
-                            <div class="row" style="margin-right:0rem">
-                                <h6 style="text-decoration:line-through;">
-                                    ${{ $product->product_price }}
-                                </h6>
-                                <h6 style="color: red">
-                                    ${{ $product->discount_price }}
-                                </h6>
-                            </div>
+                            {{-- <h6 style="text-decoration:line-through;">
+                                ${{ $product->product_price }}
+                            </h6> --}}
+                            <h6 style="color: red">
+                                ${{ $product->product_price }}
+                            </h6>
+                            {{-- </div> --}}
                         </div>
                     </div>
                 </div>
             @endforeach
         </div>
         <div class="btn-box">
-            <a href={{url('products')}}>
+            <a href={{ url('products') }}>
                 View All products
             </a>
         </div>

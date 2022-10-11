@@ -25,7 +25,7 @@
                                     sequi.
                                 </p>
                                 <div class="btn-box">
-                                    <a href="" class="btn1">
+                                    <a href="{{ route('products') }}" class="btn1">
                                         Shop Now
                                     </a>
                                 </div>
@@ -53,7 +53,7 @@
                                     sequi.
                                 </p>
                                 <div class="btn-box">
-                                    <a href="" class="btn1">
+                                    <a href="{{ route('products') }}" class="btn1">
                                         Shop Now
                                     </a>
                                 </div>
@@ -81,7 +81,7 @@
                                     sequi.
                                 </p>
                                 <div class="btn-box">
-                                    <a href="" class="btn1">
+                                    <a href="{{ route('products') }}" class="btn1">
                                         Shop Now
                                     </a>
                                 </div>

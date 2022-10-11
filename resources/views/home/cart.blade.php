@@ -73,9 +73,9 @@
                 <table class="table table-striped table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">#</th>
+                            <th scope="col" >#</th>
                             <th scope="col">Image</th>
-                            <th scope="col">Name</th>
+                            <th scope="col" style="width: 20%">Name</th>
                             <th scope="col" style="width: 15%">Price Per Piece</th>
                             <th scope="col">Quantity</th>
                             <th scope="col">Price</th>
@@ -85,9 +85,9 @@
                     <?php $totalprice = 0;
                     $totalquantity = 0; ?>
                     <tbody>
-                        @foreach ($cart as $cart)
+                        @foreach ($cart as $key => $cart)
                             <tr>
-                                <th class="align-middle" scope="row">No.?</th>
+                                <th class="align-middle" scope="row"> {{$key+1}}</th>
                                 <td><img src="/product/{{ $cart->image }}"></td>
                                 <td class="align-middle">{{ $cart->product_name }}</td>
                                 <td class="align-middle">${{ $cart->priceperpiece }}</td>
@@ -108,7 +108,7 @@
                     <div class="col-6"></div>
                     <div class="col-6">
                         <div class="row align-items-end">
-                            <div class="col-4 justify-content-start">
+                            <div class="col-4">
                                 <h6>Total Quantity : {{ $totalquantity }}</h6>
                                 <input type="text" name="totalquantity" value="{{ $totalquantity }}"
                                     hidden="">
@@ -117,8 +117,8 @@
                                 <h6>Total Price : ${{ $totalprice }}</h6>
                                 <input type="text" name="totalprice" value="{{ $totalprice }}" hidden="">
                             </div>
-                            <div class="col-3">
-                                <a class="btn btn-success"
+                            <div class="col-4 ">
+                                <a class="btn btn-success" style="margin-right:3.25rem"
                                         href="{{ url('confirm_cart') }}">Confirm</a>
                                 {{-- <input type="submit" value="Checkout"> --}}
                                 {{-- <button type="submit" class="btn btn-success me-2" --}}

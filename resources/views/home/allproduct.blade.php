@@ -24,17 +24,28 @@
             font-weight: bold;
         }
 
+        input[type=search] {
+            padding-left: 20px;
+        }
+
         #search_text {
-            /* border: 1px solid blue; */
+            /* margin-left: 10px; */
             height: 1.5rem;
             z-index: 1;
         }
 
         #list {
             /* border: 1px solid red; */
-            margin-top: -10rem;
-            margin-right: 5rem;
-            width: 19.8%;
+            margin-top: -25rem;
+            /* margin-right: 150px; */
+            min-width: 315px;
+            position: relative;
+            /* z-index: 1; */
+        }
+
+        form .btn {
+            /* border: 1px solid red; */
+            height: 38px;
         }
     </style>
 
@@ -65,7 +76,7 @@
                     <div class="dropdown" style="margin-right: 1rem">
                         <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
                             aria-expanded="false">
-                            Category {{ $category_name }}
+                            Category {{ $categoryname }}
                         </button>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('products') }}">All Products</a></li>
@@ -97,16 +108,28 @@
                         </ul>
                     </div>
                 </div>
-                <div id="search-form" action="{{ url('searching') }}" method="POST" class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" name="search_text" id="search_text"
-                        placeholder="Search" aria-label="Search">
-                    <button class="btn btn-success" type="submit" style="">Search</button>
-                    {{ csrf_field() }}
-                </div>
+                <form action="{{ url('searching') }}" method="GET">
+                    <div id="search-form" class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" name="search_text" id="search_text"
+                            placeholder="Search" aria-label="Search">
+                        <button class="btn btn-success" type="submit" style="z-index:1;">Search</button>
+                        {{ csrf_field() }}
+                    </div>
+                    {{-- <div class="d-flex" id="list">
+                    </div> --}}
+                </form>
             </div>
 
-            <div class="d-flex justify-content-end">
-                <div id="list" class="">
+            <div class="d-flex justify-content-between" style="margin-left: 0.75rem;">
+                <div class="d-flex">
+
+                </div>
+                <div class="d-flex">
+                    <div class="d-flex justify-content-start">
+
+                        <div id="list">
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -134,12 +157,11 @@
                                 <h5>
                                     {{ $product->name }}
                                 </h5>
-                                {{-- <div class="row" style="margin-right:0rem"> --}}
-                                <h6 style="text-decoration:line-through;">
+                                {{-- <h6 style="text-decoration:line-through;">
                                     ${{ $product->product_price }}
-                                </h6>
+                                </h6> --}}
                                 <h6 style="color: red">
-                                    ${{ $product->discount_price }}
+                                    ${{ $product->product_price }}
                                 </h6>
                                 {{-- </div> --}}
                             </div>

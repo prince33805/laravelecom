@@ -13,10 +13,12 @@
             text-align: center;
         }
 
-        .aaa h3,
+        .aaa h3{
+            font-weight: 700;
+        }
         .aaa h4 {
             /* font-size: 28px; */
-            margin-top: 10px;
+            margin-top: 2px;
             font-weight: 700;
         }
 
@@ -106,6 +108,9 @@
 </head>
 
 <body>
+
+    @include('sweetalert::alert')
+
     <div class="hero_area2">
         <!-- header section strats -->
         @include('home.header')
@@ -128,15 +133,15 @@
                         <img src="product/{{ $product->image }}" alt="">
                     </div>
                     <div class="aaa">
-                        <div class="row justify-content-end text-left" style="margin: 1rem; ">
-                            <div class="col-4 ">
+                        {{-- justify-content-end text-left  style="border: 1px solid red"--}}
+                        <div class="row justify-content-start text-left align-items-center" style="margin: 1rem; ">
+                            <div class="col-2 " >
+                            </div>
+                            <div class="col-6 " >
                                 <h3>{{ $product->name }}</h3>
                             </div>
-                            <div class="col-3 ">
-                                <h5>${{ $product->product_price }}</h5>
-                            </div>
-                            <div class="col-3 ">
-                                <h4 style="color: red">${{ $product->discount_price }}</h4>
+                            <div class="col-2 " >
+                                <h4 style="color: red">${{ $product->product_price }}</h4>
                             </div>
                         </div>
                         <div class="row justify-content-end text-left" style="margin: 1rem ">
