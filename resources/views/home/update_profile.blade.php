@@ -75,25 +75,25 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>User Name</label>
-                            <input type="text" class="form-control" placeholder="Product Name" name="name"
+                            <input type="text" class="form-control" placeholder="User Name" name="name"
                                 required value="{{ $user->name }}">
                         </div>
                         <div class="form-group">
                             <label>Email</label>
                             <input type="email" class="form-control" style="text-transform:lowercase"
-                                placeholder="Product Name" name="email" required value="{{ $user->email }}">
+                                placeholder="Email" name="email" required value="{{ $user->email }}">
                         </div>
 
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label>Address</label>
-                            <input type="text" class="form-control" placeholder="Product Name" name="address"
+                            <input type="text" class="form-control" placeholder="Address" name="address"
                                 required value="{{ $user->address }}">
                         </div>
                         <div class="form-group">
                             <label>Phone</label>
-                            <input type="text" class="form-control" placeholder="Product Name" name="phone"
+                            <input type="text" class="form-control" placeholder="Phone" name="phone"
                                 required value="{{ $user->phone }}">
                         </div>
                     </div>

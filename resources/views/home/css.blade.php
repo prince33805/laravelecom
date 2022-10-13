@@ -17,3 +17,5 @@
 <link href="home/css/style.css" rel="stylesheet" />
 <!-- responsive style -->
 <link href="home/css/responsive.css" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">

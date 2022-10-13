@@ -14,32 +14,6 @@
         h6 {
             font-weight: bold;
         }
-
-        /* form input[type="submit"] {
-            border: none;
-            padding: 15px 35px;
-            width: auto;
-            font-size: 16px;
-            text-transform: capitalize;
-            line-height: normal;
-            margin: 0 0.75rem;
-            display: flex;
-            background: green;
-            color: #fff;
-            font-weight: 600;
-            transition: ease all 0.1s;
-            border: 3px solid green;
-            border-radius: 1%;
-
-        } */
-
-        /* form input[type="submit"]:hover,
-        form input[type="submit"]:focus {
-            background: white;
-            color: green;
-            border: 3px solid green;
-            border-radius: 1%;
-        } */
     </style>
 
 </head>

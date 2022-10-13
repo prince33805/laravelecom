@@ -20,15 +20,14 @@ class HomeController extends Controller
 
     public function index()
     {
+        $product = Product::orderBy('created_at', 'desc')->paginate(3);
         if (Auth::id()) {
             $user = Auth::user();
-            $product = Product::all();
             $cartcount = cart::where('user_id', '=', $user->id)->get()->sum('quantity');
-            return view('home.userpage', compact('product', 'cartcount'));
         } else {
-            $product = Product::all();
-            return view('home.userpage', compact('product'));
+            $cartcount = 0;
         }
+        return view('home.userpage', compact('product', 'cartcount'));
     }
 
     public function products()
@@ -37,6 +36,7 @@ class HomeController extends Controller
         $category = Category::all();
         $categoryname = "";
         $sort = "";
+        $searchtext = "";
 
         if (Request::get('sort') == 'price_asc') {
             $product = Product::orderBy('product_price', 'asc')->get();
@@ -63,7 +63,7 @@ class HomeController extends Controller
             $cartcount = 0;
         }
 
-        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'categoryname'));
+        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'categoryname', 'searchtext'));
     }
 
     public function category($category_name)
@@ -72,6 +72,8 @@ class HomeController extends Controller
         $product = Product::where('category', '=', $category_name)->get();
         $sort = "";
         $categoryname = ": " . $category_name;
+        $searchtext = "";
+
         if (Request::get('sort') == 'price_asc') {
             $product = Product::where('category', '=', $category_name)
                 ->orderBy('product_price', 'asc')->get();
@@ -81,7 +83,8 @@ class HomeController extends Controller
                 ->orderBy('product_price', 'desc')->get();
             $sort = "Price - High to Low";
         } elseif (Request::get('sort') == 'newest') {
-            $product = Product::orderBy('created_at', 'desc')->get();
+            $product = Product::where('category', '=', $category_name)
+                ->orderBy('created_at', 'desc')->get();
             $sort = "Newest";
         } elseif (Request::get('sort') == 'name_desc') {
             $product = Product::where('category', '=', $category_name)
@@ -93,7 +96,6 @@ class HomeController extends Controller
             $sort = "Name - A to Z";
         }
 
-        // dd($product);
 
         if (Auth::id()) {
             $user = Auth::user();
@@ -103,7 +105,7 @@ class HomeController extends Controller
             $cartcount = 0;
         }
 
-        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'categoryname'));
+        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'categoryname', 'searchtext'));
     }
 
     public function product_details($id)
@@ -197,7 +199,7 @@ class HomeController extends Controller
             $user = user::find($userid);
             $user->name = Request::get('name');
             $user->phone = Request::get('phone');
-            $user->address = Request::get('addess');
+            $user->address = Request::get('address');
             $user->email = Request::get('email');
 
             $user->save();
@@ -228,9 +230,11 @@ class HomeController extends Controller
     public function searching(Request $request)
     {
         $category = Category::all();
-        $product = Product::where('name', 'LIKE', '%'.Request::get('search_text').'%')->get();
+        $product = Product::where('name', 'LIKE', '%' . Request::get('search_text') . '%')->get();
+        // dd($product->count());
         $sort = "";
         $categoryname = "";
+        $searchtext = Request::get('search_text');
 
         // dd($product);
 
@@ -242,8 +246,6 @@ class HomeController extends Controller
             $cartcount = 0;
         }
 
-        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'categoryname'));
+        return view('home.allproduct', compact('user', 'product', 'cartcount', 'category', 'sort', 'categoryname', 'searchtext'));
     }
-
-
 }

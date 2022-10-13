@@ -15,7 +15,11 @@
             font-weight: bold;
         }
 
-        .table1 tr {
+        .table1 {
+            /* border: 1px solid red; */
+            table-layout: fixed;
+            white-space: normal;
+            word-wrap: break-word;
         }
     </style>
 
@@ -45,30 +49,29 @@
                     <div class="table-responsive">
                         <h4>Address Infomation</h4>
                         <br>
-                        <table class="table">
+                        <table class="table table1">
                             <tbody>
-                                <tr>
-                                    <th style="padding:1.5rem 0rem" scope="row">User Name</th>
-                                    <td style="padding:1.5rem 0rem">{{ $user->name }}</td>
+                                <tr style="">
+                                    <th style="width: 40%;padding: 1.5rem;">User name</th>
+                                    <td style="padding: 1.5rem;">{{ $user->name }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="padding:1.5rem 0rem" scope="row">Email</th>
-                                    <td style="padding:1.5rem 0rem">{{ $user->email }}</td>
+                                    <th>Email</th>
+                                    <td>{{ $user->email }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="padding:1.5rem 0rem" scope="row">Address</th>
-                                    <td style="padding:1.5rem 0rem">{{ $user->address }}</td>
+                                    <th>Address</th>
+                                    <td>{{ $user->address }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="padding:1.5rem 0rem" scope="row">Phone</th>
-                                    <td style="padding:1.5rem 0rem">{{ $user->phone }}</td>
+                                    <th>Phone</th>
+                                    <td>{{ $user->phone }}</td>
                                 </tr>
                                 <tr>
-                                    <th style="padding:1.5rem 0rem"></th>
-                                    <td style="padding:1.5rem 0rem"><a class="btn btn-warning me-2 " href="{{ url('update_profile') }}"
-                                            style="padding: 0.5rem;margin-right:0rem">Update</a> </td>
+                                    <th></th>
+                                    <td><a class="btn btn-warning me-2 " href="{{ url('update_profile') }}"
+                                        style="padding: 0.5rem;margin-right:0rem">Update</a></td>
                                 </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -93,7 +96,7 @@
                             <tbody>
                                 @foreach ($cart as $key => $cart)
                                     <tr>
-                                        <td class="align-middle">{{$key+1}}</td>
+                                        <td class="align-middle">{{ $key + 1 }}</td>
                                         <td><img src="/product/{{ $cart->image }}"></td>
                                         <td class="align-middle">{{ $cart->product_name }}</td>
                                         <td class="align-middle">${{ $cart->priceperpiece }}</td>

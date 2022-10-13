@@ -22,24 +22,45 @@ class CartController extends Controller
         $user = Auth::user();
         $product = product::find($id);
 
-        $cart = new cart;
+        $check = cart::where('user_id', '=', $user->id)
+            ->where('product_id', '=', $product->id)
+            // ->get();
+            ->count();
+
+        // dd($check);
 
         if (Auth::id()) {
-            $cart->user_id = $user->id;
-            $cart->name = $user->name;
-            $cart->phone = $user->phone;
-            $cart->address = $user->address;
 
-            $cart->product_id = $product->id;
-            $cart->product_name = $product->name;
-            $cart->image = $product->image;
-            $cart->priceperpiece = $product->product_price;
-            $cart->quantity = $request->quantity;
-            $cart->price = ($request->quantity) * ($product->product_price);
+            if ($check == '0') {
+                $cart = new cart;
+                $cart->user_id = $user->id;
+                $cart->name = $user->name;
+                $cart->phone = $user->phone;
+                $cart->address = $user->address;
 
-            $cart->save();
-            alert::success('Product Added Successfully', 'We have added product to the cart ');
-            return redirect()->back();
+                $cart->product_id = $product->id;
+                $cart->product_name = $product->name;
+                $cart->image = $product->image;
+                $cart->priceperpiece = $product->product_price;
+                $cart->quantity = $request->quantity;
+                $cart->price = ($request->quantity) * ($product->product_price);
+
+                $cart->save();
+                alert::success('Product Added Successfully', 'We have added product to the cart ');
+                return redirect()->back();
+            } else {
+                $cartitem = cart::where('user_id', '=', $user->id)
+                    ->where('product_id', '=', $product->id)
+                    ->first();
+                // dd($cartitem->quantity);
+                $cart = cart::find($cartitem->id);
+                $cart->quantity = $cart->quantity + $request->quantity;
+                $cart->save();
+                // dd($cart->quantity);
+                // $cart->quantity = $cart->quantity + $request->quantity;
+                alert::success('Product Updated Successfully', 'We have added product to the cart ');
+                return redirect()->back();
+            }
         } else {
             return redirect('login');
         }
@@ -130,5 +151,4 @@ class CartController extends Controller
             return redirect('login');
         }
     }
-
 }

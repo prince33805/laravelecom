@@ -78,7 +78,7 @@ route::post('/searchproduct', [HomeController::class, 'searchproduct'])->name('s
 route::get('searching',[HomeController::class, 'searching'])->name('searching');
 
 route::post('/add_cart/{id}', [CartController::class, 'add_cart']);
-route::get('/cart', [CartController::class, 'show_cart']);
+route::get('/cart', [CartController::class, 'show_cart'])->name('cart');
 route::get('/remove_cart/{id}', [CartController::class, 'remove_cart']);
 route::get('/confirm_cart', [CartController::class, 'confirm_cart']);
 route::post('/checkout', [CartController::class, 'checkout']);

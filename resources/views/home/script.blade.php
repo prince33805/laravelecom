@@ -1,7 +1,7 @@
 <div class="cpy_">
-    <p class="mx-auto">© 2021 All Rights Reserved By <a href="https://html.design/">Free Html Templates</a><br>
+    <p class="mx-auto">© 2021 All Rights Reserved By <a href="#">xibho007</a><br>
 
-        Distributed By <a href="https://themewagon.com/" target="_blank">ThemeWagon</a>
+        Distributed By <a href="#" target="_blank">xibho007</a>
 
     </p>
 </div>
@@ -15,6 +15,7 @@
 <script src="home/js/custom.js"></script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <script type="text/javascript">
     $('.delete-confirm').on('click', function(event) {
         event.preventDefault();
@@ -43,4 +44,39 @@
                 $("#preloader").css("visibility", "hidden").fadeOut();
             }, 300);
         });
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#search_text').keyup(function() {
+            var query = $(this).val();
+            //   console.log(query);
+            if (query != '') {
+                var _token = $('input[name="_token"]').val();
+            }
+            $.ajax({
+                url: "{{ route('searchproduct') }}",
+                method: "POST",
+                data: {
+                    query: query,
+                    _token: _token
+                },
+                success: function(data) {
+                    $('#list').fadeIn();
+                    $('#list').html(data);
+                }
+            });
+        });
+    });
+    $(document).on('click', 'li', function() {
+        $('#list').fadeOut();
+        // $('#search_text').val($(this).text());
+    })
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous">
 </script>

@@ -40,6 +40,14 @@
             border: 3px solid green;
             border-radius: 1%;
         }
+
+        .table1 {
+            /* border: 1px solid red; */
+            table-layout: fixed;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
     </style>
 
 </head>
@@ -61,8 +69,9 @@
                     {{-- <span>Detail</span> --}}
                 </h2>
             </div>
-            <div class="table-responsive">
-                <table class="table">
+            
+            <div class="table">
+                <table class="table table1">
                     <tbody>
                         <tr>
                             <th style="padding:2rem;" scope="row">User Id</th>
@@ -78,7 +87,7 @@
                         </tr>
                         <tr>
                             <th style="padding:2rem;" scope="row">Address</th>
-                            <td style="padding:2rem;">{{ $user->address }}</td>
+                            <td style="padding:2rem;width:25%">{{ $user->address }}</td>
                             <th style="padding:2rem;" scope="row">Creted At</th>
                             <td style="padding:2rem;">{{ $user->created_at }}</td>
                         </tr>
@@ -86,46 +95,15 @@
                             <th></th>
                             <td></td>
                             <th></th>
-                            <td></td>
+                            <td>
+                                <a class="btn btn-warning me-2 " href="{{ url('update_profile') }}"
+                                    style="padding: 0.5rem;">Update</a>      </td>
                         </tr>
                         
                     </tbody>
                 </table>
             </div>
-            <div class="row">
-                <div class="col-8"></div>
-                <div class="col-4">
-                    <a class="btn btn-warning me-2 " href="{{ url('update_profile') }}"
-                        style="padding: 0.5rem;">Update</a>        
-                </div>
-            </div>
             <br>
-            {{-- <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th scope="col">Order Id</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Product Name</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Price Per Piece</th>
-                            <th scope="col">Price</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($useritem as $useritem)
-                            <tr>
-                                <td class="align-middle" scope="row">{{ $useritem->order_id }}</td>
-                                <td class="align-middle" scope="row">Img</td>
-                                <td class="align-middle" scope="row">{{ $useritem->product_name }}</td>
-                                <td class="align-middle" scope="row">{{ $useritem->quantity }}</td>
-                                <td class="align-middle" scope="row">{{ $useritem->priceperpiece }}</td>
-                                <td class="align-middle" scope="row">{{ $useritem->price }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div> --}}
         </div>
     </section>
 

@@ -72,7 +72,7 @@
                 <table class="table table-hover">
                     <tbody>
                         <tr>
-                            <th class="align-middle" scope="row">Name</th>
+                            <th class="align-middle" style="width: 50%" scope="row">Name</th>
                             <td class="align-middle">{{ $user->name }}</td>
                         </tr>
                         <tr>
